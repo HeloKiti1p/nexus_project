@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-light p-5 rounded">
+    <h1 class="display-4">Добро пожаловать!</h1>
+    <p class="lead">Это главная страница моей социальной сети. Здесь скоро появится лента постов.</p>
+    <hr class="my-4">
+    <p>А пока можно зарегистрироваться или войти.</p>
+    {% if not user.is_authenticated %}
+        <a class="btn btn-primary btn-lg" href="{% url 'users:register' %}" role="button">Зарегистрироваться</a>
+        <a class="btn btn-outline-primary btn-lg" href="{% url 'users:login' %}" role="button">Войти</a>
+    {% else %}
+        <p>Привет, {{ user.username }}! Ты уже с нами.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Лента постов{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 col-md-8 offset-md-2">
+        <h2 class="section-title">Лента постов</h2>
+        
+        {% if user.is_authenticated %}
+            <div class="d-grid gap-2 mb-4">
+                <a href="{% url 'posts:create' %}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle me-1"></i>Создать новый пост
+                </a>
+            </div>
+        {% endif %}
+
+        {% for post in posts %}
+            <div class="post-card">
+                <div class="post-header">
+                    {% if post.author.avatar %}
+                        <img src="{{ post.author.avatar.url }}" alt="Аватар" class="post-avatar">
+                    {% else %}
+                        <div class="post-avatar">{{ post.author.username|first|upper }}</div>
+                    {% endif %}
+                    <div>
+                        <div class="post-author">
+                            <a href="{% url 'users:profile' post.author.username %}">{{ post.author.username }}</a>
+                        </div>
+                        <div class="post-time">{{ post.created_at|date:"d.m.Y H:i" }}</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>{{ post.text|linebreaksbr }}</p>
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="Изображение" class="post-image">
+                    {% endif %}
+                </div>
+                <!-- Здесь позже будут лайки и комментарии -->
+            </div>
+        {% empty %}
+            <p>Пока нет ни одного поста. Будьте первым!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

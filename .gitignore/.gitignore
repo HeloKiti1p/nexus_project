@@ -1,0 +1,26 @@
+# Виртуальное окружение
+venv/
+env/
+
+# Python кеш
+__pycache__/
+*.pyc
+
+# База данных
+*.sqlite3
+db.sqlite3
+
+# Медиа и статика (если они не должны быть в репозитории)
+media/
+staticfiles/
+
+# Файлы окружения
+.env
+
+# VS Code
+.vscode/
+
+# IDE
+.idea/
+*.swp
+*.swo

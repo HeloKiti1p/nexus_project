@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль {{ profile_user.username }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 col-md-4">
+        <div class="post-card">
+            <div class="post-header">
+                <h4 class="section-title mb-0">Профиль</h4>
+            </div>
+            <div class="post-content text-center">
+                {% if profile_user.avatar %}
+                    <img src="{{ profile_user.avatar.url }}" alt="Аватар" class="profile-avatar">
+                {% else %}
+                    <div class="profile-avatar-placeholder">{{ profile_user.username|first|upper }}</div>
+                {% endif %}
+                <h5>{{ profile_user.get_full_name|default:profile_user.username }}</h5>
+                <p class="text-muted">@{{ profile_user.username }}</p>
+                {% if profile_user.bio %}
+                    <p>{{ profile_user.bio }}</p>
+                {% endif %}
+                {% if profile_user.birth_date %}
+                    <p><strong>День рождения:</strong> {{ profile_user.birth_date|date:"d.m.Y" }}</p>
+                {% endif %}
+                {% if user == profile_user %}
+                    <a href="{% url 'users:profile_edit' %}" class="btn btn-primary">
+                        <i class="bi bi-pencil-square me-1"></i>Редактировать профиль
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-8">
+        <h3 class="section-title">Посты {{ profile_user.username }}</h3>
+        {% for post in posts %}
+           <div class="post-card">
+    <div class="post-header">
+        <!-- аватар и имя автора (без времени) -->
+        <div class="post-author">
+            <a href="{% url 'users:profile' post.author.username %}">{{ post.author.username }}</a>
+        </div>
+        <!-- время убрали отсюда -->
+    </div>
+    <div class="post-content">
+        <p>{{ post.text|linebreaksbr }}</p>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Изображение" class="post-image">
+        {% endif %}
+        <!-- Время теперь здесь, после текста/картинки -->
+        <div class="post-time">{{ post.created_at|date:"d.m.Y H:i" }}</div>
+    </div>
+</div>
+        {% empty %}
+            <p>У пользователя пока нет постов.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

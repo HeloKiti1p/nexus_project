@@ -1,0 +1,472 @@
+/* ========== ОСНОВНЫЕ ПЕРЕМЕННЫЕ (CSS CUSTOM PROPERTIES) ========== */
+/* :root — это псевдокласс, который соответствует корневому элементу (<html>).
+   Здесь мы определяем глобальные переменные, которые можно использовать во всём документе.
+   Преимущество: если захотим сменить цветовую схему, достаточно изменить значение переменной,
+   и все элементы, где она используется, обновятся автоматически. */
+:root {
+    /* --primary-color: основной цвет бренда (шапка, кнопки, ссылки) */
+    --primary-color: #3b5998;        /* тёмно-синий, как у Facebook */
+    --primary-hover: #2d4373;         /* цвет при наведении на кнопку/ссылку (темнее) */
+    --bg-color: #1b1e21;              /* цвет фона всей страницы (светло-серый) */
+    --card-bg: #ffffff;                /* цвет фона карточек постов (белый) */
+    --text-color: #1c1e21;             /* основной цвет текста (почти чёрный) */
+    --text-muted: #3b3535;              /* приглушённый цвет для даты, подписей */
+    --border-color: #dddfe2;            /* цвет границ (светло-серый) */
+ /*   --shadow: 0 2px 5px rgba(0,0,0,0.1); /* тень для карточек и элементов */
+    --font-main: 'Roboto', sans-serif;   /* основной шрифт (подключается в HTML) */
+}
+
+/* ========== СБРОС СТИЛЕЙ (RESET) ========== */
+/* Убираем отступы, поля и меняем box-sizing для всех элементов,
+   чтобы padding и border не увеличивали общую ширину/высоту. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ========== ОСНОВНЫЕ СТИЛИ ДЛЯ ТЕГОВ ========== */
+body {
+    font-family: var(--font-main);        /* подключаем шрифт из переменной */
+    background-color: var(--bg-color);    /* фон страницы */
+    color: var(--text-color);             /* цвет текста */
+    line-height: 1.6;                     /* межстрочный интервал для удобства чтения */
+}
+
+/* Ссылки: убираем подчёркивание и наследуем цвет от родителя (если не указано иное) */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* У списков убираем маркеры */
+ul {
+    list-style: none;
+}
+
+/* ========== ШАПКА (HEADER) ========== */
+header {
+    background-color: var(--bg-color); /* фон шапки — основной цвет */
+    color: white;                           /* текст в шапке белый */
+    padding: 1rem 2rem;                     /* внутренние отступы: сверху/снизу 1rem, слева/справа 2rem */
+    box-shadow: var(--shadow);               /* тень снизу для отделения от контента */
+}
+
+/* Контейнер внутри шапки — ограничивает ширину и центрирует содержимое */
+.header-container {
+    max-width: 1200px;          /* максимальная ширина, чтобы на больших экранах не растягивалось */
+    margin: 0 auto;              /* центрирование по горизонтали */
+    display: flex;               /* включаем flexbox для выравнивания элементов в ряд */
+    justify-content: space-between; /* распределяем пространство: лого слева, меню справа */
+    align-items: center;          /* выравниваем по вертикали по центру */
+}
+
+/* Логотип (название соцсети) */
+.logo {
+    font-size: 1.5rem;   /* размер шрифта 1.5rem (относительно корневого, обычно 1rem = 16px) */
+    font-weight: bold;   /* жирное начертание */
+}
+
+/* Меню навигации (список ссылок) */
+.nav-links {
+    display: flex;       /* выстраиваем ссылки в ряд */
+    gap: 2rem;         /* расстояние между ссылками */
+    align-items: center; /* выравнивание по вертикали */
+}
+
+/* Сами ссылки в меню */
+.nav-links a {
+    color: white;        /* белый цвет текста */
+    font-weight: 500;    /* средняя жирность (полужирный) */
+    transition: color 0.2s; /* плавное изменение цвета при наведении */
+}
+
+.nav-links a:hover {
+    text-decoration: underline; /* подчёркивание при наведении */
+}
+
+/* ========== КАРТОЧКА ПОСТА ========== */
+.post-card {
+    background: var(--card-bg);         /* белый фон */
+    border-radius: 8px;                 /* скругление углов */
+    box-shadow: var(--shadow);           /* тень */
+    margin-bottom: 1.5rem;               /* отступ снизу между постами */
+    overflow: hidden;                    /* чтобы ничего не вылезало за скруглённые углы */
+}
+
+/* Шапка карточки (аватар, имя, дата) */
+.post-header {
+    padding: 1rem;                        /* внутренние отступы */
+    display: flex;                         /* flexbox для выравнивания в ряд */
+    align-items: center;                   /* по вертикали по центру */
+    gap: 0.5rem;                           /* отступ между аватаром и текстом */
+}
+
+/* Аватарка пользователя (изображение) */
+.post-avatar {
+    width: 40px;                           /* ширина 40px */
+    height: 40px;                          /* высота 40px */
+    border-radius: 50%;                     /* делает изображение круглым */
+    object-fit: cover;                      /* обрезает картинку, чтобы заполнить круг без искажений */
+    background-color: var(--primary-color); /* фон, если нет аватарки */
+    display: flex;                           /* для центрирования текста-заглушки */
+    align-items: center;
+    justify-content: center;
+    color: white;                            /* цвет текста-заглушки */
+    font-weight: bold;
+}
+
+/* Имя автора */
+.post-author {
+    font-weight: bold;
+}
+
+/* Дата публикации */
+.post-time {
+    margin-top: 0.5rem;      /* отступ сверху от текста */
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-top: 1px dashed var(--border-color); /* необязательно: линия сверху */
+    padding-top: 0.5rem;
+}
+
+/* Основной контент поста (текст, картинка) */
+.post-content {
+    padding: 0 1rem 1rem 1rem;  /* отступы: сверху 0, справа/слева 1rem, снизу 1rem */
+}
+
+/* Изображение внутри поста */
+.post-image {
+    max-width: 100%;              /* чтобы не вылезало за пределы карточки */
+    border-radius: 8px;            /* скругление углов */
+    margin-top: 1rem;              /* отступ сверху от текста */
+}
+
+/* ========== КНОПКИ ========== */
+.btn {
+    display: inline-block;         /* чтобы можно было задавать отступы и размеры */
+    padding: 0rem 1.5rem;          /* внутренние отступы */
+    border-radius: 6px;            /* скругление */
+    font-weight: 500;              /* полужирный */
+    cursor: pointer;               /* курсор-указатель */
+    border: none;                  /* убираем стандартную рамку */
+    transition: background-color 0.2s; /* плавное изменение фона при наведении */
+    text-align: center;            /* центрирование текста */
+}
+
+/* Основная кнопка (синяя) */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover); /* при наведении становится темнее */
+}
+
+/* Второстепенная кнопка (серая) */
+.btn-secondary {
+    background-color: #e4e6eb;
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background-color: #d8dadf;    /* чуть темнее при наведении */
+}
+
+/* ========== ФОРМЫ ========== */
+/* Группа полей формы (отступ между полями) */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Метка (label) над полем */
+.form-label {
+    display: block;                /* чтобы занимала всю ширину и была над полем */
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+
+/* Само поле ввода (input, textarea, select) */
+.form-control {
+    width: 100%;                   /* растягивается на всю ширину контейнера */
+    padding: 0.6rem;               /* внутренний отступ для текста */
+    border: 1px solid var(--border-color); /* рамка цвета border-color */
+    border-radius: 6px;
+    font-family: inherit;           /* наследует шрифт от родителя (не меняется на monospace) */
+    font-size: 1rem;
+}
+
+/* При фокусе (когда поле активно) меняем рамку и добавляем тень */
+.form-control:focus {
+    outline: none;                  /* убираем стандартный outline */
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(59, 89, 152, 0.2); /* синее свечение */
+}
+
+/* ========== КОНТЕЙНЕР ========== */
+/* Ограничивает ширину основного контента и центрирует его */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;              /* сверху/снизу 2rem, слева/справа авто (центрирование) */
+    padding: 0 1rem;                /* отступы по бокам для маленьких экранов */
+}
+
+/* ========== АДАПТИВНОСТЬ (МЕДИАЗАПРОСЫ) ========== */
+/* Правила, которые сработают только когда ширина экрана меньше или равна 768px (планшеты и телефоны) */
+@media (max-width: 768px) {
+    /* В шапке меняем направление flex на колонку и уменьшаем отступы */
+    .header-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    /* Ссылки меню переносятся на новую строку, если не влезают */
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* В шапке карточки поста аватар и текст могут переноситься */
+    .post-header {
+        flex-wrap: wrap;
+    }
+
+    /* Уменьшаем отступы в контейнере */
+    .container {
+        margin: 1rem auto;
+    }
+}
+
+/* Для очень маленьких телефонов (ширина до 480px) */
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.2rem;           /* логотип чуть меньше */
+    }
+
+    .nav-links {
+        gap: 0.8rem;                  /* уменьшаем расстояние между ссылками */
+    }
+
+    .post-card {
+        margin-bottom: 1rem;
+    }
+}
+/* ========== ДОПОЛНИТЕЛЬНЫЕ КЛАССЫ ДЛЯ ПРОФИЛЯ ========== */
+
+/* Аватар в профиле (крупный) */
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+/* Заглушка для аватара, если нет картинки */
+.profile-avatar-placeholder {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0 auto 1rem auto;
+}
+
+/* Заголовки секций */
+.section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+/* Текст-подсказка для форм */
+.form-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* Ошибки форм */
+.errorlist {
+    color: #dc3545;
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0;
+    font-size: 0.875rem;
+}
+
+/* Кнопка на всю ширину */
+.w-100 {
+    width: 100%;
+}
+
+/* Отступы для flex-контейнеров */
+.d-flex {
+    display: flex;
+}
+.gap-2 {
+    gap: 0.5rem;
+}
+.mt-3 {
+    margin-top: 1rem;
+}
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+.text-center {
+    text-align: center;
+}
+
+/* Сетка (если не используешь Bootstrap) */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem;
+}
+.col-12 {
+    flex: 0 0 100%;
+    padding: 0 0.5rem;
+}
+@media (min-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .col-md-8 {
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+    }
+    .offset-md-2 {
+        margin-left: 16.666667%;
+    }
+}
+/* ========== КРАСИВЫЙ ЛОГОТИП ========== */
+.logo {
+    font-size: 1.9rem;
+    font-weight: 800;
+    background: linear-gradient(165deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    letter-spacing: -0.5px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* ========== КНОПКИ НАВИГАЦИИ (ССЫЛКИ В ШАПКЕ) ========== */
+.nav-links a {
+    padding: 0.1rem 0.4rem;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.nav-links a:hover {
+    background: white;
+    color: var(--primary-color) !important;
+    border-color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Специально для кнопки "Выйти" можно сделать другой цвет при наведении */
+.nav-links a[href*="logout"]:hover {
+    background: #ff4757;
+    color: white !important;
+    border-color: #ff4757;
+}
+
+/* ========== ОСНОВНЫЕ КНОПКИ (btn-primary, btn-secondary) ========== */
+.btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #2d3748;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* Кнопка "Создать пост" в ленте (если это отдельная кнопка) */
+.btn-primary i, .btn-secondary i {
+    margin-right: 0.5rem;
+}
+
+/* ========== ВЫПАДАЮЩЕЕ МЕНЮ (если осталось Bootstrap) ========== */
+.dropdown-menu {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white !important;
+}
+
+.dropdown-item i {
+    margin-right: 0.5rem;
+}
+
+/* ========== АНИМАЦИЯ ДЛЯ ИКОНОК ========== */
+.bi {
+    transition: transform 0.2s;
+}
+
+a:hover .bi {
+    transform: scale(1.1);
+}
+.post-comments {
+    border-top: 1px solid var(--border-color);
+    padding: 1rem;
+    background-color: #f9f9f9; /* чуть другой фон, если хочешь выделить */
+}
