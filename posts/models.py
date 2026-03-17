@@ -5,17 +5,36 @@ class Post(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='posts',
-        verbose_name='Автор'
+        related_name='posts'
     )
     text = models.TextField('Текст поста', max_length=1000)
     image = models.ImageField('Изображение', upload_to='posts/', blank=True, null=True)
     created_at = models.DateTimeField('Дата публикации', auto_now_add=True)
 
     class Meta:
-        ordering = ['-created_at']  # новые посты первыми
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
+        ordering = ['-created_at']
 
     def __str__(self):
-        return f'Пост {self.author} от {self.created_at:%d.%m.%Y}'
+        return f'Пост {self.id} от {self.author.username}'
+
+class Like(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='likes'
+    )
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='likes'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'post'], name='unique_like')
+        ]
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.user.username} liked post {self.post.id}'

@@ -4,7 +4,7 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['text', 'image']          # обязательно!
+        fields = ['text', 'image']
         widgets = {
             'text': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Что у вас нового?'}),
         }

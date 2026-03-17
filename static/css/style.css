@@ -470,3 +470,34 @@ a:hover .bi {
     padding: 1rem;
     background-color: #f9f9f9; /* чуть другой фон, если хочешь выделить */
 }
+.post-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.like-button.liked {
+    color: #e74c3c;
+}
+
+.like-button:hover {
+    color: #e74c3c;
+}
+
+.like-button i {
+    font-size: 1.2rem;
+}

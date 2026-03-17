@@ -1,0 +1,32 @@
+{% for post in page_obj %}
+    <div class="post-card">
+        <div class="post-header">
+            {% if post.author.avatar %}
+                <img src="{{ post.author.avatar.url }}" alt="Аватар" class="post-avatar">
+            {% else %}
+                <div class="post-avatar">{{ post.author.username|first|upper }}</div>
+            {% endif %}
+            <div>
+                <div class="post-author">
+                    <a href="{% url 'users:profile' post.author.username %}">{{ post.author.username }}</a>
+                </div>
+                <div class="post-time">{{ post.created_at|date:"d.m.Y H:i" }}</div>
+            </div>
+        </div>
+        <div class="post-content">
+            <p>{{ post.text|linebreaksbr }}</p>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Изображение" class="post-image">
+            {% endif %}
+        </div>
+        <div class="post-actions">
+            <button class="like-button {% if post.liked_by_user %}liked{% endif %}" 
+                    data-post-id="{{ post.id }}">
+                <i class="bi {% if post.liked_by_user %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                <span class="like-count">{{ post.likes.count }}</span>
+            </button>
+        </div>
+    </div>
+{% empty %}
+    <p>Пока нет ни одного поста. Будьте первым!</p>
+{% endfor %}
